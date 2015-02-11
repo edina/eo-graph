@@ -1,0 +1,13 @@
+{
+    "name": "eo-graph",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
+        "test": "mocha tests/test.js"
+    },
+    "dependencies": {
+    },
+    "devDependencies": {
+        "mocha": "~2.1.0"
+    }
+}
