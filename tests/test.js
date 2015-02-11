@@ -1,0 +1,92 @@
+var eo = require('../src/index.js');
+var assert = require('assert');
+var fs = require('fs');
+
+describe('EO-Graph', function() {
+    var eoObj;
+
+    eoObj = {
+      __version__: 2,
+      __root__: {
+        name: 'color',
+        label: 'Select one color:',
+        edges: [
+          {
+            label: 'Blue',
+            value: '#0000ff',
+            next: 'Id-00001'
+          },
+          {
+            label: 'Green',
+            value: '#00ff00',
+            next: 'Id-00002'
+          }
+        ]
+      },
+      'Id-00001': {
+        name: 'material',
+        label: 'Choose a material:',
+        edges: [
+          {
+            label: 'Leather',
+            value: 'leather',
+            next: '__end__'
+          },
+          {
+            label: 'Fabric',
+            value: 'fabric',
+            next: '__end__'
+          },
+          {
+            label: 'Material #',
+            value: {
+              type: 'number'
+            },
+            next: '__end__'
+          }
+        ]
+      },
+      __end__: {
+        name: 'End'
+      }
+    };
+
+    describe('init', function() {
+        it('with a valid object and initial node', function() {
+            assert.equal(true, eo.init(eoObj, '__root__'));
+        });
+    });
+
+    describe('next', function() {
+        it('with a simple value', function() {
+            var node = eo.next('#0000ff');
+
+            assert.deepEqual(eoObj['Id-00001'], node);
+        });
+
+        it('with a typed value', function() {
+            var node = eo.next(55);
+
+            assert.deepEqual(eoObj.__end__, node);
+        });
+    });
+
+    describe('edges', function() {
+        it('get', function() {
+            var edges = eo.edges();
+            var expected = [{ edgeId: 'Id-00001', value: '#0000ff' },
+                            { edgeId: '__end__', value: 55 }];
+
+            assert.deepEqual(edges, expected);
+        });
+    });
+
+    describe('values', function() {
+        it('get', function() {
+            var values = eo.values();
+            var expected = ['#0000ff', 55];
+
+            assert.deepEqual(values, expected);
+        });
+    });
+});
