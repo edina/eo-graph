@@ -12,10 +12,23 @@
 var graph = {};
 var currentNode;
 var edges = [];
+var version = 2;
 
 var initGraph = function(object, root) {
     graph = object;
-    currentNode = graph[root];
+    if (typeof graph === 'object' && graph.__version__ === version) {
+        if (graph.hasOwnProperty(root)) {
+            currentNode = graph[root];
+        }
+        else {
+            console.error('Invalid root node');
+        }
+    }
+    else {
+        console.error('Invalid graph version');
+    }
+
+    return true;
 };
 
 var findEdgeByValue = function(value, edges) {
