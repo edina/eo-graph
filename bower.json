@@ -1,0 +1,28 @@
+{
+  "name": "eo-graph",
+  "version": "0.0.1",
+  "homepage": "https://github.com/edina/eo-graph",
+  "authors": [
+    "EDINA <edina@ed.ac.uk>"
+  ],
+  "description": "Library to transverse the Earth Observation Graph",
+  "main": "src/index.js",
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "keywords": [
+    "earth",
+    "observation",
+    "graph"
+  ],
+  "license": "EDINA",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
