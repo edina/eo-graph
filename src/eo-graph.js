@@ -1,10 +1,14 @@
 (function(root, factory) {
     'use strict';
-    if (typeof module === 'object' && module.exports) {
+    if (typeof define === 'function' && define.amd) {
+        define([], function() {
+            return factory();
+        });
+    }else if (typeof module === 'object' && module.exports) {
         module.exports = factory();
     }
     else {
-        return factory();
+        root['eo-graph'] = factory();
     }
 })(this, function() { // jscs:disable validateIndentation
 'use strict';
