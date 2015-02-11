@@ -6,7 +6,7 @@
     "EDINA <edina@ed.ac.uk>"
   ],
   "description": "Library to transverse the Earth Observation Graph",
-  "main": "src/index.js",
+  "main": "src/eo-graph.js",
   "moduleType": [
     "amd",
     "node"

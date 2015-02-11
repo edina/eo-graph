@@ -1,4 +1,4 @@
-var eo = require('../src/index.js');
+var eo = require('../src/eo-graph.js');
 var assert = require('assert');
 var fs = require('fs');
 
