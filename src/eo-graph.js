@@ -22,7 +22,9 @@ var initGraph = function(object, root) {
     graph = object;
     if (typeof graph === 'object' && graph.__version__ === version) {
         if (graph.hasOwnProperty(root)) {
+            graph.__root__ = root;
             currentNode = graph[root];
+
         }
         else {
             console.error('Invalid root node');
@@ -108,16 +110,21 @@ var doCurrent = function() {
     return currentNode;
 };
 
-var doPrev = function(edgeId) {
+var doPrev = function(edge) {
     var indexOfLast;
     var lastEdge;
 
     indexOfLast = edges.length - 1;
     lastEdge = edges[indexOfLast];
 
-    if (lastEdge === edgeId) {
+    if (lastEdge === edge) {
         edges.pop(indexOfLast);
-        currentNode = graph[edges[indexOfLast - 1].edgeId];
+        if (indexOfLast > 0) {
+            currentNode = graph[edges[indexOfLast - 1].edgeId];
+        }
+        else {
+            currentNode = graph.__root__;
+        }
     }
     else {
         console.error('No found edges with id: ' + edgeId);
