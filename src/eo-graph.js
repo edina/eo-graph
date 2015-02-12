@@ -35,18 +35,57 @@ var initGraph = function(object, root) {
     return true;
 };
 
-var findEdgeByValue = function(value, edges) {
+var validate = function(value, ruleName) {
+    var validation = {
+        msg: '',
+        isValid: true,
+        value: value
+    };
+
+    switch (ruleName) {
+        case 'number':
+            var validatedValue = Number(value);
+            if (isNaN(validatedValue)) {
+                validation.valid = false;
+                validation.msg = 'The value is not a number';
+            }
+            else {
+                validation.value = validatedValue;
+            }
+        break;
+        default:
+            validation.msg = 'Invalid rule name: ' + ruleName;
+    }
+
+    return validation;
+};
+
+var matchEdgesWithValue = function(value, edges) {
+    var valueTested;
+    var edge = null;
+
     for (var i = 0, len = edges.length; i < len; i++) {
         if (typeof edges[i].value === 'object') {
-            if (typeof value === edges[i].value.type) {
-                return edges[i].next;
+            valueTested = validate(value, edges[i].value.type);
+            if (valueTested.isValid) {
+                edge =  {
+                    edgeId: edges[i].next,
+                    value: valueTested.value
+                };
+            }
+            else {
+                console.debug(valueTested.msg);
             }
         }
         else if (edges[i].value === value) {
-            return edges[i].next;
+            edge = {
+                edgeId: edges[i].next,
+                value: value
+            };
         }
     }
-    return null;
+
+    return edge;
 };
 
 var doNext = function(edge) {
@@ -88,15 +127,15 @@ var doPrev = function(edgeId) {
 
 var nextNode = function(value) {
     var nextNode;
-    var edgeId;
+    var edge;
 
     if (currentNode.edges !== undefined) {
-        edgeId = findEdgeByValue(value, currentNode.edges);
+        edge = matchEdgesWithValue(value, currentNode.edges);
 
-        if (edgeId !== null) {
+        if (edge !== null) {
             nextNode = doNext({
-                edgeId: edgeId,
-                value: value
+                edgeId: edge.edgeId,
+                value: edge.value
             });
         }
         else {
