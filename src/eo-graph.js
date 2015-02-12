@@ -35,7 +35,7 @@ var initGraph = function(object, root) {
     return true;
 };
 
-var validate = function(value, ruleName) {
+var matchByType = function(value, ruleName) {
     var validation = {
         msg: '',
         isValid: true,
@@ -65,8 +65,8 @@ var matchEdgesWithValue = function(value, edges) {
     var edge = null;
 
     for (var i = 0, len = edges.length; i < len; i++) {
-        if (typeof edges[i].value === 'object') {
-            valueTested = validate(value, edges[i].value.type);
+        if (typeof edges[i].match === 'object') {
+            valueTested = matchByType(value, edges[i].match.type);
             if (valueTested.isValid) {
                 edge =  {
                     edgeId: edges[i].next,

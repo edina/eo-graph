@@ -39,7 +39,7 @@ describe('EO-Graph', function() {
           },
           {
             label: 'Material #',
-            value: {
+            match: {
               type: 'number'
             },
             next: '__end__'
