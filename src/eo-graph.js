@@ -20,6 +20,8 @@ var version = 2;
 
 var initGraph = function(object, root) {
     var initialNode;
+    var error = false;
+
     graph = object;
     if (typeof graph === 'object' && graph.__version__ === version) {
         if (root !== undefined && graph.hasOwnProperty(root)) {
@@ -30,6 +32,7 @@ var initGraph = function(object, root) {
         }
         else {
             console.error('Not root node found');
+            error = true;
         }
 
         if (graph.hasOwnProperty(initialNode)) {
@@ -38,13 +41,15 @@ var initGraph = function(object, root) {
         else
         {
             console.error('Invalid root node');
+            error = true;
         }
     }
     else {
         console.error('Invalid graph version');
+        error = true;
     }
 
-    return true;
+    return !error;
 };
 
 var matchByType = function(value, ruleName) {
