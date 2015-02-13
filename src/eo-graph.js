@@ -15,6 +15,7 @@
 
 var graph = {};
 var currentNode;
+var currentNodeId;
 var edges = [];
 var version = 2;
 
@@ -37,6 +38,7 @@ var initGraph = function(object, root) {
 
         if (graph.hasOwnProperty(initialNode)) {
             currentNode = graph[initialNode];
+            currentNode.id = initialNode;
         }
         else
         {
@@ -120,8 +122,12 @@ var doNext = function(edge) {
     nextNode = graph[edge.edgeId];
 
     if (nextNode !== undefined) {
+        edge.nodeId = currentNode.id;
         edges.push(edge);
+
+        // Move to the next node
         currentNode = nextNode;
+        currentNode.id = edge.edgeId;
     }
     else {
         console.error('No found nodes with id: ' + edge.edgeId);
