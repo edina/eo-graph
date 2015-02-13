@@ -19,14 +19,24 @@ var edges = [];
 var version = 2;
 
 var initGraph = function(object, root) {
+    var initialNode;
     graph = object;
     if (typeof graph === 'object' && graph.__version__ === version) {
-        if (graph.hasOwnProperty(root)) {
-            graph.__root__ = root;
-            currentNode = graph[root];
-
+        if (root !== undefined && graph.hasOwnProperty(root)) {
+            initialNode = root;
+        }
+        else if (graph.hasOwnProperty('__root__')) {
+            initialNode = graph.__root__;
         }
         else {
+            console.error('Not root node found');
+        }
+
+        if (graph.hasOwnProperty(initialNode)) {
+            currentNode = graph[initialNode];
+        }
+        else
+        {
             console.error('Invalid root node');
         }
     }
@@ -74,6 +84,7 @@ var matchEdgesWithValue = function(value, edges) {
                     edgeId: edges[i].next,
                     value: valueTested.value
                 };
+                break;
             }
             else {
                 console.debug(valueTested.msg);
@@ -84,10 +95,18 @@ var matchEdgesWithValue = function(value, edges) {
                 edgeId: edges[i].next,
                 value: value
             };
+            break;
         }
     }
 
     return edge;
+};
+
+var isTerminalNode = function(node) {
+    if (node.edges && node.edges.length > 0) {
+        return false;
+    }
+    return true;
 };
 
 var doNext = function(edge) {
@@ -167,13 +186,18 @@ var getValues = function() {
     });
 };
 
+var hasNext = function() {
+    return !isTerminalNode(currentNode);
+};
+
 return {
     init: initGraph,
     next: nextNode,
     current: doCurrent,
     prev: prevNode,
     edges: getEdges,
-    values: getValues
+    values: getValues,
+    hasNext: hasNext
 };
 
 });
