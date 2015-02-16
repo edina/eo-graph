@@ -190,6 +190,10 @@ var hasNext = function() {
     return !isTerminalNode(currentNode);
 };
 
+var hasPrevious = function() {
+    return edges.length > 0;
+};
+
 return {
     init: initGraph,
     next: nextNode,
@@ -197,7 +201,8 @@ return {
     previous: doPrev,
     edges: getEdges,
     values: getValues,
-    hasNext: hasNext
+    hasNext: hasNext,
+    hasPrevious: hasPrevious
 };
 
 });
