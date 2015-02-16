@@ -90,4 +90,13 @@ describe('EO-Graph', function() {
             assert.deepEqual(values, expected);
         });
     });
+
+    describe('previous', function() {
+        it('with a simple value', function() {
+            var node = eo.previous();
+
+            assert.deepEqual(eoObj['Id-00001'], node);
+        });
+    });
+
 });

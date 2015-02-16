@@ -140,26 +140,19 @@ var doCurrent = function() {
     return currentNode;
 };
 
-var doPrev = function(edge) {
-    var indexOfLast;
-    var lastEdge;
+var doPrev = function() {
+    var edge;
+    var prevNode;
 
-    indexOfLast = edges.length - 1;
-    lastEdge = edges[indexOfLast];
+    prevNode = null;
+    edge = edges.pop();
 
-    if (lastEdge === edge) {
-        edges.pop(indexOfLast);
-        if (indexOfLast > 0) {
-            currentNode = graph[edges[indexOfLast - 1].edgeId];
-        }
-        else {
-            currentNode = graph.__root__;
-        }
-    }
-    else {
-        console.error('No found edges with id: ' + edgeId);
+    if (edge !== undefined) {
+        currentNode = graph[edge.nodeId];
+        prevNode = currentNode;
     }
 
+    return currentNode;
 };
 
 var nextNode = function(value) {
@@ -183,10 +176,6 @@ var nextNode = function(value) {
     return nextNode;
 };
 
-var prevNode = function() {
-    return doPrev(edges[edges.length - 1]);
-};
-
 var getEdges = function() {
     return edges;
 };
@@ -205,7 +194,7 @@ return {
     init: initGraph,
     next: nextNode,
     current: doCurrent,
-    prev: prevNode,
+    previous: doPrev,
     edges: getEdges,
     values: getValues,
     hasNext: hasNext
