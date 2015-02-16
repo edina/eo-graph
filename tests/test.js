@@ -1,9 +1,10 @@
-var eo = require('../src/eo-graph.js');
+var EOGraph = require('../src/eo-graph.js');
 var assert = require('assert');
 var fs = require('fs');
 
 describe('EO-Graph', function() {
     var eoObj;
+    var eo = new EOGraph();
 
     eoObj = {
       __version__: 2,

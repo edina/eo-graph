@@ -2,13 +2,13 @@
     'use strict';
     if (typeof define === 'function' && define.amd) {
         define([], function() {
-            return factory();
+            return factory;
         });
     }else if (typeof module === 'object' && module.exports) {
-        module.exports = factory();
+        module.exports = factory;
     }
     else {
-        root['eo-graph'] = factory();
+        root['eo-graph'] = factory;
     }
 })(this, function() { // jscs:disable validateIndentation
 'use strict';
