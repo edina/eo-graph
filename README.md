@@ -134,3 +134,45 @@ eo.current();
 
 ```
 
+
+##### Utilities
+
+** Create the graph from a csv **
+
+A csv can be used for creating the csv.
+
+The first column contains the type of the row:
+
+
+*** type ***
+
+It is ignored but is visually useful for creating the file
+
+*** answer or edge ***
+It is an answer to a question
+
+ type  | label | value | from  | to
+-------|-------|-------|-------|----
+
+
+*** question or node ***
+
+
+ type  | label | id
+-------|-------|----
+
+
+*** root ***
+The entry point to the tree
+
+ type  |  id
+-------|-----
+
+
+This command will generate the json with the graph, any error will be printed to stderr
+
+```
+npm run parse:csv -- ListOfAnswersAndQuestions.csv > graph.json
+```
+
+A common workflow would be start with the list of answers, if unique identifiers are used for the them those could be used as node identifiers, completing the*from* and *to* columns and executing the above command a list of candidated questions/nodes will be generated and could be added to the input csv for editing the labels of the questions.

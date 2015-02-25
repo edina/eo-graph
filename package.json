@@ -3,7 +3,8 @@
     "version": "0.0.1",
     "private": true,
     "scripts": {
-        "test": "mocha tests/test.js"
+        "test": "mocha tests/test.js",
+        "parse:csv": "node scripts/csv2eo.js"
     },
     "dependencies": {
     },
