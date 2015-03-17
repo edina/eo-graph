@@ -129,7 +129,7 @@ parser
         console.warn('Nodes without label: ' + noLabel);
         console.warn('Nodes without edges: ' + noEdges);
 
-        console.log(JSON.stringify(graph));
+        console.log(JSON.stringify(graph, null, '  '));
     })
     .on('error', function(error) {
         console.error(error);
