@@ -89,6 +89,7 @@ var matchEdgesWithValue = function(value, edges) {
             if (valueTested.isValid) {
                 edge =  {
                     edgeId: edges[i].next,
+                    label: edges[i].label,
                     value: valueTested.value
                 };
                 break;
@@ -100,6 +101,7 @@ var matchEdgesWithValue = function(value, edges) {
         else if (edges[i].value === value) {
             edge = {
                 edgeId: edges[i].next,
+                label: edges[i].label,
                 value: value
             };
             break;
@@ -165,7 +167,8 @@ var nextNode = function(value) {
         if (edge !== null) {
             nextNode = doNext({
                 edgeId: edge.edgeId,
-                value: edge.value
+                value: edge.value,
+                label: edge.label
             });
         }
         else {
