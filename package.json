@@ -6,6 +6,7 @@
         "test": "mocha tests/test.js",
         "parse:csv": "node scripts/csv2eo.js"
     },
+    "main": "src/eo-graph.js",
     "dependencies": {
     },
     "devDependencies": {
