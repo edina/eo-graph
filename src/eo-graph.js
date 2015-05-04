@@ -72,6 +72,15 @@ var matchByType = function(value, ruleName) {
                 validation.value = validatedValue;
             }
         break;
+        case 'nonempty':
+            if (value === '') {
+                validation.valid = false;
+                validation.msg = 'The value is empty';
+            }
+            else {
+                validation.validation = validatedValue;
+            }
+        break;
         default:
             validation.msg = 'Invalid rule name: ' + ruleName;
     }
@@ -168,7 +177,8 @@ var nextNode = function(value) {
             nextNode = doNext({
                 edgeId: edge.edgeId,
                 value: edge.value,
-                label: edge.label
+                label: edge.label,
+                nodeName: currentNode.label
             });
         }
         else {
