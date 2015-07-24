@@ -25,7 +25,7 @@ var graph = {
 var ROW = { type: 0 };
 var ROOT = { id: 1 };
 var NODE = { label: 1, id: 2 };
-var EDGE = { label: 1, value: 2, from: 3, to: 4 };
+var EDGE = { label: 1, value: 2, from: 3, to: 4, element: 5, elementOptions: 6};
 
 var parser = parse({delimiter: ','});
 
@@ -34,7 +34,7 @@ parser
         var len;
         var rowType;
         var nodeId, nodeName, nodeLabel;
-        var fromNode, toNode, valueEdge, labelEdge;
+        var edge, fromNode, toNode, valueEdge, labelEdge, elementEdge, elementOptions;
 
         len = data.length;
         if (len > 0) {
@@ -71,6 +71,14 @@ parser
                         valueEdge = data[EDGE.value];
                         labelEdge = data[EDGE.label];
 
+                        if (len >= 6 && data[EDGE.element] !== '') {
+                            elementEdge = data[EDGE.element];
+                        }
+
+                        if (len >= 7 && data[EDGE.elementOptions] !== '') {
+                            elementOptions = data[EDGE.elementOptions].split(',');
+                        }
+
                         // If the edge not has a toNode assume that is the end
                         if (toNode === '') {
                             toNode = '__end__';
@@ -93,11 +101,59 @@ parser
                             graph[fromNode].edges = [];
                         }
 
-                        graph[fromNode].edges.push({
+                        edge = {
                             label: labelEdge,
-                            value: valueEdge,
                             next: toNode
-                        });
+                        };
+
+                        switch (elementEdge){
+                            case 'slider':
+                                edge.element = {
+                                    type: 'slider',
+                                    options: {
+                                        min: 0,
+                                        max: 100,
+                                        value: 50
+                                    }
+                                };
+
+                                edge.match = {
+                                    type: 'number'
+                                };
+
+                                if (elementOptions.length === 3) {
+                                    edge.element.options.min = elementOptions[0];
+                                    edge.element.options.max = elementOptions[1];
+                                    edge.element.options.value = elementOptions[2];
+                                }
+
+                                break;
+                            case 'textbox':
+                                edge.element = {
+                                    type: 'textbox'
+                                };
+
+                                edge.match = {
+                                    type: 'nonempty'
+                                };
+                                break;
+                            case 'checkbox':
+                                edge.element = {
+                                    type: 'checkbox',
+                                    options: {
+                                        value: valueEdge
+                                    }
+                                };
+
+                                edge.match = {
+                                    type: 'nonempty'
+                                };
+                                break;
+                            default:
+                                edge.value = valueEdge;
+                        }
+
+                        graph[fromNode].edges.push(edge);
                     }
                 break;
                 case 'root':
