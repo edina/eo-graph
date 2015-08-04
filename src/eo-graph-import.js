@@ -121,7 +121,7 @@ parser
                                     type: 'number'
                                 };
 
-                                if (elementOptions.length === 3) {
+                                if (elementOptions && elementOptions.length === 3) {
                                     edge.element.options.min = elementOptions[0];
                                     edge.element.options.max = elementOptions[1];
                                     edge.element.options.value = elementOptions[2];
