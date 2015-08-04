@@ -144,6 +144,6 @@ Check the wiki for the instructions of how to create the spreadsheet [wiki](http
 This command will generate the json with the graph, any error will be printed to stderr
 
 ```
-npm run parse:csv -- ListOfAnswersAndQuestions.csv > graph.json
+npm run --silent parse:csv -- ListOfAnswersAndQuestions.csv > graph.json
 ```
 
