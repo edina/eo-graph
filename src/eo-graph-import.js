@@ -24,7 +24,7 @@ var graph = {
 // Position of the data in the csv
 var ROW = { type: 0 };
 var ROOT = { id: 1 };
-var NODE = { label: 1, id: 2 };
+var NODE = { label: 1, id: 2, info: 6 };
 var EDGE = { label: 1, value: 2, from: 3, to: 4, element: 5, elementOptions: 6};
 
 var parser = parse({delimiter: ','});
@@ -33,7 +33,7 @@ parser
     .on('data', function(data) {
         var len;
         var rowType;
-        var nodeId, nodeName, nodeLabel;
+        var nodeId, nodeName, nodeLabel, nodeInfo;
         var edge, fromNode, toNode, valueEdge, labelEdge, elementEdge, elementOptions;
 
         len = data.length;
@@ -46,17 +46,22 @@ parser
                     if (len >= 4) {
                         nodeId = data[NODE.id];
                         nodeLabel = data[NODE.label];
+                        if(data[NODE.info] !== ""){
+                            nodeInfo = data[NODE.info];
+                        }
 
                         // Check id the node has been defined
                         if (!graph.hasOwnProperty(nodeId)) {
                             graph[nodeId] = {
                                 name: nodeId,
-                                label: nodeLabel
+                                label: nodeLabel,
+                                info: nodeInfo
                             };
                         }
                         else {
                             graph[nodeId].name = nodeId;
                             graph[nodeId].label = nodeLabel;
+                            graph[nodeId].info = nodeInfo;
                         }
                     }
                     else {
@@ -68,7 +73,14 @@ parser
                     if (len >= 5) {
                         fromNode = data[EDGE.from];
                         toNode = data[EDGE.to];
-                        valueEdge = data[EDGE.value];
+                        if(data[EDGE.value].indexOf("[img:") > -1){
+                            var rxText = /(.*)\[img:(.*)\]/;
+                            var res = data[EDGE.value].match(rxText);
+                            valueEdge = res[1]+' <img src="'+res[2]+'">';
+                        }
+                        else{
+                            valueEdge = data[EDGE.value];
+                        }
                         labelEdge = data[EDGE.label];
 
                         if (len >= 6 && data[EDGE.element] !== '') {
