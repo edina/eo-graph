@@ -34,7 +34,7 @@ parser
         var len;
         var rowType;
         var nodeId, nodeName, nodeLabel, nodeInfo;
-        var edge, fromNode, toNode, valueEdge, labelEdge, elementEdge, elementOptions;
+        var edge, fromNode, toNode, valueEdge, labelEdge, elementEdge, elementOptions, imgEdge;
 
         len = data.length;
         if (len > 0) {
@@ -76,7 +76,8 @@ parser
                         if(data[EDGE.value].indexOf("[img:") > -1){
                             var rxText = /(.*)\[img:(.*)\]/;
                             var res = data[EDGE.value].match(rxText);
-                            valueEdge = res[1]+' <img src="'+res[2]+'">';
+                            valueEdge = res[1];
+                            imgEdge = res[2];
                         }
                         else{
                             valueEdge = data[EDGE.value];
@@ -163,6 +164,7 @@ parser
                                 break;
                             default:
                                 edge.value = valueEdge;
+                                edge.image = imgEdge;
                         }
 
                         graph[fromNode].edges.push(edge);
