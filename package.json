@@ -1,6 +1,6 @@
 {
     "name": "eo-graph",
-    "version": "0.0.2",
+    "version": "0.2.0",
     "private": true,
     "scripts": {
         "test": "mocha tests/test.js",
@@ -11,6 +11,6 @@
     },
     "devDependencies": {
         "mocha": "~2.1.0",
-	"csv-parse": "~0.0.9"
+        "csv-parse": "~0.0.9"
     }
 }
