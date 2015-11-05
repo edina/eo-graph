@@ -58,6 +58,12 @@ describe('EO-Graph', function() {
         });
     });
 
+    describe('info', function() {
+        it('with a valid object and initial node', function() {
+            assert.deepEqual({ nodes: 1, edges: 3, version: 2 }, eo.getInfo());
+        });
+    });
+
     describe('next', function() {
         it('with a simple value', function() {
             var node = eo.next('#0000ff');
