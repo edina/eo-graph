@@ -81,9 +81,22 @@ describe('EO-Graph', function() {
     describe('edges', function() {
         it('get', function() {
             var edges = eo.edges();
-            var expected = [{ edgeId: 'Id-00001', value: '#0000ff', nodeId: '__root__' },
-                            { edgeId: '__end__', value: 55, nodeId: 'Id-00001' }];
-
+            var expected = [
+                {
+                    edgeId: 'Id-00001',
+                    value: '#0000ff',
+                    label: 'Blue',
+                    nodeName: 'Select one color:',
+                    nodeId: '__root__'
+                },
+                {
+                    edgeId: '__end__',
+                    value: 55,
+                    label: 'Material #',
+                    nodeName: 'Choose a material:',
+                    nodeId: 'Id-00001'
+                }
+            ];
             assert.deepEqual(edges, expected);
         });
     });
