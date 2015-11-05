@@ -54,6 +54,41 @@ var initGraph = function(object, root) {
     return !error;
 };
 
+/**
+ * Count of nodes and edges in the graph
+ * @returns {Object}
+ *   - edges Count of edges
+ *   - nodes Count of nodes
+ */
+var countNodesAndEdges = function() {
+    var nNodes = 0;
+    var nEdges = 0;
+    for (var k in graph) {
+        if (graph.hasOwnProperty(k) && !k.match('^__.*__$')){
+            nNodes++;
+            if (graph[k].edges) {
+                nEdges += graph[k].edges.length;
+            }
+        }
+    }
+
+    return {
+        nodes: nNodes,
+        edges: nEdges
+    };
+};
+
+/**
+ * Returns basic information about the graph
+ * @returns {Object}
+ *   - edges Count of edges
+ *   - nodes Count of nodes
+ *   - version Version of the graph
+ */
+var getInfo = function() {
+    return Object.assign(countNodesAndEdges(), {version: graph.__version__});
+};
+
 var matchByType = function(value, ruleName) {
     var validation = {
         msg: '',
@@ -209,6 +244,7 @@ var hasPrevious = function() {
 
 return {
     init: initGraph,
+    getInfo: getInfo,
     next: nextNode,
     current: doCurrent,
     previous: doPrev,
