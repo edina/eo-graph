@@ -24,7 +24,7 @@ var graph = {
 // Position of the data in the csv
 var ROW = { type: 0 };
 var ROOT = { id: 1 };
-var NODE = { label: 1, id: 2, info: 6 };
+var NODE = { label: 1, id: 2, type: 5, value: 6 };
 var EDGE = { label: 1, value: 2, from: 3, to: 4, element: 5, elementOptions: 6};
 
 var parser = parse({delimiter: ','});
@@ -33,7 +33,7 @@ parser
     .on('data', function(data) {
         var len;
         var rowType;
-        var nodeId, nodeName, nodeLabel, nodeInfo;
+        var nodeId, nodeName, nodeLabel, nodeType, nodeTypeValue;
         var edge, fromNode, toNode, valueEdge, labelEdge, elementEdge, elementOptions, imgEdge;
 
         len = data.length;
@@ -46,22 +46,24 @@ parser
                     if (len >= 4) {
                         nodeId = data[NODE.id];
                         nodeLabel = data[NODE.label];
-                        if(data[NODE.info] !== ""){
-                            nodeInfo = data[NODE.info];
+                        if(data[NODE.value] !== ""){
+                            nodeType = data[NODE.type];
+                            nodeTypeValue = data[NODE.value];
                         }
 
                         // Check id the node has been defined
                         if (!graph.hasOwnProperty(nodeId)) {
                             graph[nodeId] = {
                                 name: nodeId,
-                                label: nodeLabel,
-                                info: nodeInfo
+                                label: nodeLabel
                             };
                         }
                         else {
                             graph[nodeId].name = nodeId;
                             graph[nodeId].label = nodeLabel;
-                            graph[nodeId].info = nodeInfo;
+                        }
+                        if(nodeType !== undefined && nodeTypeValue !== undefined) {
+                            graph[nodeId][nodeType] = nodeTypeValue;
                         }
                     }
                     else {
