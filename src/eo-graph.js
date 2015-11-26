@@ -86,7 +86,10 @@ var countNodesAndEdges = function() {
  *   - version Version of the graph
  */
 var getInfo = function() {
-    return Object.assign(countNodesAndEdges(), {version: graph.__version__});
+    var info = countNodesAndEdges();
+    info.version = graph.__version__;
+
+    return info;
 };
 
 var matchByType = function(value, ruleName) {
