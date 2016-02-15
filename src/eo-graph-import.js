@@ -164,6 +164,19 @@ parser
                                     type: 'nonempty'
                                 };
                                 break;
+                            case 'info':
+                              edge.element = {
+                                  type: 'info',
+                                  value: valueEdge,
+                                  options: {
+                                      text: data[EDGE.elementOptions]
+                                  }
+                                };
+
+                                edge.match = {
+                                    type: 'anything'
+                                };
+                            break;
                             default:
                                 edge.value = valueEdge;
                                 edge.image = imgEdge;
