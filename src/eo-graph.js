@@ -95,7 +95,7 @@ var getInfo = function() {
 var matchByType = function(value, ruleName) {
     var validation = {
         msg: '',
-        isValid: true,
+        valid: false,
         value: value
     };
 
@@ -107,6 +107,7 @@ var matchByType = function(value, ruleName) {
                 validation.msg = 'The value is not a number';
             }
             else {
+                validation.valid = true;
                 validation.value = validatedValue;
             }
         break;
@@ -116,8 +117,12 @@ var matchByType = function(value, ruleName) {
                 validation.msg = 'The value is empty';
             }
             else {
+                validation.valid = true;
                 validation.validation = validatedValue;
             }
+        break;
+        case 'anything':
+            validation.valid = true;
         break;
         default:
             validation.msg = 'Invalid rule name: ' + ruleName;
@@ -133,7 +138,7 @@ var matchEdgesWithValue = function(value, edges) {
     for (var i = 0, len = edges.length; i < len; i++) {
         if (typeof edges[i].match === 'object') {
             valueTested = matchByType(value, edges[i].match.type);
-            if (valueTested.isValid) {
+            if (valueTested.valid) {
                 edge =  {
                     edgeId: edges[i].next,
                     label: edges[i].label,
